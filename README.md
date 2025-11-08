@@ -41,29 +41,29 @@ docker-compose exec order-service php artisan migrate
 ## 📡 API Endpoints
 
 ### Authentication (User Service)
-POST /auth/register
-POST /auth/login
-GET /auth/profile
+- POST /auth/register
+- POST /auth/login
+- GET /auth/profile
 
 
 ### Categories (Product Service)
-GET /categories
-POST /categories (Admin/Seller)
-PUT /categories/{id} (Admin/Seller)
-DELETE /categories/{id} (Admin/Seller)
+- GET /categories
+- POST /categories (Admin/Seller)
+- PUT /categories/{id} (Admin/Seller)
+- DELETE /categories/{id} (Admin/Seller)
 
 ### Products (Product Service)
-GET /products
-get products/{id}/stock 
-patch products/{id}/update-stock 
-POST /products (Admin/Seller)
-PUT /products/{id} (Admin/Seller)
-DELETE /products/{id} (Admin/Seller)
+- GET /products
+- get products/{id}/stock 
+- patch products/{id}/update-stock 
+- POST /products (Admin/Seller)
+- PUT /products/{id} (Admin/Seller)
+- DELETE /products/{id} (Admin/Seller)
 
 ### Orders (order Service)
-GET /admin/orders (Admin/Seller)
-patch orders/{id}/status (admin/seller) 
-get orders  customer
-POST /orders customer
+- GET /admin/orders (Admin/Seller)
+- patch orders/{id}/status (admin/seller) 
+- get orders  customer
+- POST /orders customer
 
 
