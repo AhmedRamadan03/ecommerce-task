@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    restart: unless-stopped
+    ports:
+      - "8001:9000"
+    networks:
+      - ecommerce-network
+    environment:
+      DB_HOST: user-db
+      DB_PORT: 3306
+      DB_DATABASE: user_db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      - user-db
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    restart: unless-stopped
+    ports:
+      - "8002:9000"
+    networks:
+      - ecommerce-network
+    environment:
+      DB_HOST: product-db
+      DB_PORT: 3306
+      DB_DATABASE: product_db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      - product-db
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    restart: unless-stopped
+    ports:
+      - "8003:9000"
+    networks:
+      - ecommerce-network
+    environment:
+      DB_HOST: order-db
+      DB_PORT: 3306
+      DB_DATABASE: order_db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      - order-db
+
+  # Databases
+  user-db:
+    image: mysql:8.0
+    container_name: user-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_db
+    ports:
+      - "3307:3306"
+    networks:
+      - ecommerce-network
+
+  product-db:
+    image: mysql:8.0
+    container_name: product-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: product_db
+    ports:
+      - "3308:3306"
+    networks:
+      - ecommerce-network
+
+  order-db:
+    image: mysql:8.0
+    container_name: order-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: order_db
+    ports:
+      - "3309:3306"
+    networks:
+      - ecommerce-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - ecommerce-network
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+
+networks:
+  ecommerce-network:
+    driver: bridge
