@@ -25,13 +25,19 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::with('category')->findOrFail($id);
+        $product = Product::with('category')->find($id);
+        if (!$product) {
+             return $this->errorResponse('not found product',404);
+        }
         return $this->successResponse(new ProductResource($product));
     }
 
     public function update(StoreProductRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
+        if (!$product) {
+             return $this->errorResponse('not found product',404);
+        }
         $data = $request->validated();
         $product->update($data);
         return $this->successResponse(new ProductResource($product));
@@ -39,7 +45,10 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
+        if (!$product) {
+             return $this->errorResponse('not found product',404);
+        }
         $product->delete();
         return $this->successResponse([], 'Product deleted');
     }
