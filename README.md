@@ -23,8 +23,8 @@ I designed this system with **separation of concerns** in mind:
 
 1. **Clone the repository**
    ```bash
-git clone https://github.com/your-username/ecommerce-microservices.git
-cd ecommerce-microservices
+git clone https://github.com/AhmedRamadan03/ecommerce-task.git
+cd ecommerce-task
 
 docker-compose up -d --build
 
